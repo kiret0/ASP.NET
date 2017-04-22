@@ -15,6 +15,7 @@
         public IRepository<ApplicationUser> Users => new Repository<ApplicationUser>(this.context);
         public IRepository<Ad> Ads => new Repository<Ad>(this.context);
         public IRepository<Category> Categories => new Repository<Category>(this.context);
+        public IRepository<Image> Images => new Repository<Image>(this.context);
         public IProdavalnikContext Context => this.context;
         public int SaveChanges()
         {

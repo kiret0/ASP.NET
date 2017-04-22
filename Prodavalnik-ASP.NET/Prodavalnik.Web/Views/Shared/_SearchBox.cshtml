@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SelectListItem>
+
+<div class="container-fluid">
+    @using (@Html.BeginForm("Index", "Ads", FormMethod.Get, new {@class = "form-inline"}))
+    {
+        @Html.TextBox("Search",null, new{@class= "form-contorl"})
+        <div class="form-group cat">
+            
+            <div class="col-md-10">
+                @Html.DropDownList("Categories", new SelectList(Model, "Value", "Text", Model.FirstOrDefault(x => x.Selected)?.Value), htmlAttributes: new { @class = "form-control fields-select" })
+               
+            </div>
+        </div>
+    }
+</div>

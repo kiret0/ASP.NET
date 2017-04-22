@@ -4,6 +4,8 @@ namespace Prodavalnik.Data.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models.EntityModels;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Prodavalnik.Data.ProdavalnikContext>
@@ -28,29 +30,40 @@ namespace Prodavalnik.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            
-            
-             
 
-//            context.Ads.AddOrUpdate(new Ad[]
-//            {
-//                new Ad()
-//                {
-//                    Title = "Kartofi",
-//                    Description = "Mnogo sveji kartofi ot gradinata na selo",
-//                    Price = 12,
-//                    Author = author,
-//                    Category = category
-//                },
-//                new Ad()
-//                {
-//                    Title = "Svinski but",
-//                    Description = "Ot Nasheto prasence specqlna selekciq",
-//                    Price = 9,
-//                    Author = author,
-//                    Category = category
-//                },
-//            });
+            if (!context.Roles.Any())
+            {
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                roleManager.Create(new IdentityRole("Admin"));
+            }
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var user = userManager.FindByEmail("kiro@gmail.com");
+            
+            if (user != null)
+            {
+                userManager.AddToRole(user.Id, "Admin");
+            }
+
+
+            //            context.Ads.AddOrUpdate(new Ad[]
+            //            {
+            //                new Ad()
+            //                {
+            //                    Title = "Kartofi",
+            //                    Description = "Mnogo sveji kartofi ot gradinata na selo",
+            //                    Price = 12,
+            //                    Author = author,
+            //                    Category = category
+            //                },
+            //                new Ad()
+            //                {
+            //                    Title = "Svinski but",
+            //                    Description = "Ot Nasheto prasence specqlna selekciq",
+            //                    Price = 9,
+            //                    Author = author,
+            //                    Category = category
+            //                },
+            //            });
         }
     }
 }

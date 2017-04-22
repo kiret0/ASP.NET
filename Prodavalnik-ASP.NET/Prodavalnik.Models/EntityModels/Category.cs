@@ -8,8 +8,8 @@
 
         public string Name { get; set; }
 
-        public virtual ICollection<Ad> Ads { get; set; }
+        public string ImageUrl { get; set; }
 
-        public virtual  ICollection<Category> SubCategories { get; set; }
+        public virtual ICollection<Ad> Ads { get; set; }
     }
 }

@@ -23,16 +23,13 @@ namespace Prodavalnik.Data
 
         public IDbSet<Category> Categories { get; set; }
 
+        public IDbSet<Image> Images { get; set; }
+
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Category>().HasOptional(c => c.SubCategories).WithMany();
-            base.OnModelCreating(modelBuilder);
-        }
+        
     }
 
 

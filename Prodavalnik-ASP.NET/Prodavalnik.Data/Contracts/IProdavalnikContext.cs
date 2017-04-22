@@ -11,6 +11,8 @@
 
         IDbSet<Category> Categories { get; }
 
+        IDbSet<Image> Images { get; }
+
         int SaveChanges();
         IDbSet<T> Set<T>()
            where T : class;

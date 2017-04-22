@@ -80,10 +80,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingModels\AddCategoryBindingModel.cs" />
+    <Compile Include="BindingModels\Ads\AddAdsBindingModel.cs" />
     <Compile Include="EntityModels\Ad.cs" />
     <Compile Include="EntityModels\ApplicationUser.cs" />
     <Compile Include="EntityModels\Category.cs" />
     <Compile Include="EntityModels\Enums\State.cs" />
+    <Compile Include="EntityModels\Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
@@ -94,6 +97,15 @@
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\Ads\AddAdViewModel.cs" />
+    <Compile Include="ViewModels\Ads\AdsViewModel.cs" />
+    <Compile Include="ViewModels\Ads\AdViewModel.cs" />
+    <Compile Include="ViewModels\Ads\PreviewAdViewModel.cs" />
+    <Compile Include="ViewModels\Categories\AddCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Categories\CategoryWithAdsViewModel.cs" />
+    <Compile Include="ViewModels\Home\HomeAdViewModel.cs" />
+    <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Manage\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\ConfigureTwoFactorViewModel.cs" />
@@ -103,9 +115,7 @@
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BindingModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

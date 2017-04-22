@@ -10,6 +10,7 @@
     using Models.EntityModels;
     using Models.ViewModels.Account;
 
+    [RoutePrefix("account")]
     [Authorize]
     public class AccountController : Controller
     {
@@ -50,8 +51,7 @@
             }
         }
 
-        //
-        // GET: /Account/Login
+        [Route("login")]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -59,8 +59,7 @@
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        [Route("login")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -89,8 +88,7 @@
             }
         }
 
-        //
-        // GET: /Account/VerifyCode
+        [Route("verifycode")]
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -102,8 +100,7 @@
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/VerifyCode
+        [Route("verifycode")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -132,16 +129,14 @@
             }
         }
 
-        //
-        // GET: /Account/Register
+        [Route("register")]
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        [Route("register")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -170,8 +165,7 @@
             return View(model);
         }
 
-        //
-        // GET: /Account/ConfirmEmail
+        [Route("confirmemail")]
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -183,16 +177,14 @@
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+        [Route("forgotpassword")]
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+        [Route("forgotpassword")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -219,8 +211,7 @@
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+        [Route("forgotpasswordconfirmation")]
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
@@ -235,8 +226,7 @@
             return code == null ? View("Error") : View();
         }
 
-        //
-        // POST: /Account/ResetPassword
+        [Route("resetpassword")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -261,16 +251,14 @@
             return View();
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
+        [Route("resetpasswordconfirmation")]
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ExternalLogin
+        [Route("externallogin")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -295,8 +283,7 @@
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/SendCode
+        [Route("sendcode")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -315,8 +302,7 @@
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
+        [Route("externallogincallback")]
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
@@ -341,12 +327,12 @@
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
+        [Route("externalloginconfirmation")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -383,8 +369,7 @@
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
+        [Route("logoff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -393,8 +378,7 @@
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
+        [Route("Externalloginfailure")]
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {

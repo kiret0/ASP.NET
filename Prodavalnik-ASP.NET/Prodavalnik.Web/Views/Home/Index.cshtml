@@ -1,7 +1,58 @@
-﻿@model IEnumerable<Prodavalnik.Models.EntityModels.Ad>
+﻿@using System.Web.Razor.Generator
+@model Prodavalnik.Models.ViewModels.Home.HomeViewModel
+    @{
+        ViewBag.Title = "Продавалник - Безплани обяви";
 
-@{
-    ViewBag.Title = "Index";
-}
+    }
 
-<h2>Home</h2>
+<div class="container">
+    <div class="jumbotron">
+        <div class="search-box">
+            @using (Html.BeginForm("Index", "Ads", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <div class="form-group search-input">
+                    @Html.TextBox("Search", null, new { @class = "form-control search-input", placeholder = "Търсене..." })
+                </div>
+
+                <div class="form-group search-btn">
+                    <input class="btn btn-default search-btn" type="submit" value="Търси" />
+                </div>
+            }
+        </div>
+        <div class="category-list">
+            @foreach (var cat in Model.CategoryViewModel)
+            {
+                <div class="category-item">
+                    <span class="category-icon"><img src="@cat.ImageUrl" width="25px" /></span>
+                    @Html.ActionLink(@cat.Name, "Category", "Home", new { categoryName = cat.Name, }, new { @class = "category-name" })
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            @foreach (var ad in Model.AdsViewModel)
+            {
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <a href="ad/@ad.Title" title="@ad.Title">
+                            @if (ad.Images.Count() != 0)
+                            {
+                                <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title" />
+                            }
+                            else
+                            {
+                                <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title" />
+                            }
+
+                            <h3 class="title-style">@ad.Title</h3>
+
+                        </a>
+                        <div >@ad.Price.ToString("0.###") лв.</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
