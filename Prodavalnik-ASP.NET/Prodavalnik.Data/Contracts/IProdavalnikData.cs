@@ -8,6 +8,7 @@
         IRepository<Ad> Ads { get; }
         IRepository<Category> Categories { get; }
         IRepository<Image> Images { get; }
+        IRepository<Message> Messages { get; }
         IProdavalnikContext Context { get; }
 
         int SaveChanges();

@@ -28,7 +28,6 @@
         public virtual ICollection<Image> Images { get; set; }
 
         public DateTime PublishOn { get; set; }
-
         
     }
 }

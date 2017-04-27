@@ -1,0 +1,54 @@
+﻿@model Prodavalnik.Models.ViewModels.Ads.AdViewModel
+@{
+    ViewBag.Title = "AdDetails";
+}
+
+<div class="fleft offercontent rel">
+    <img src="../../UploadsImages/@Model.Images.First().ImageName" alt="@Model.Images.First().ImageName"/>
+    <div>
+        <h2>@Model.Title</h2>
+    </div>
+    <div>
+        <span>Номер на обявата: @Model.Id</span>
+        <span>@Model.PublishOn</span>
+    </div>
+    <div>
+        <span>Състояние</span>
+        <span>@Model.State</span>
+    </div>
+    <hr/>
+    <div>
+        <p>@Model.Description</p>
+    </div>
+    @foreach (var image in Model.Images.Skip(1))
+    {
+        <div>
+            <img src="../../UploadsImages/@image.ImageName" alt="@image.ImageName" />
+        </div>
+    }
+</div>
+<div class="offer-sidebar">
+    <div class="offer-sidebar__inner offeractions">
+        <div class="price-label">
+            <strong>@Model.Price</strong>
+        </div>
+        <ul class="offer-sidebar__buttons contact_methods">
+            <li>
+                <a href="sendmessage/@Model.Title" class="contact-button button-email">
+                    <i data-icon="message"></i>
+                    <span class="contactbox-indent rel brkword">Изпрати съобщение</span>
+                </a>
+            </li>
+            <li>
+                <div class="contact-button link-phone">
+                    <i data-icon="phone"></i>
+                    <strong class="xx-large">@Model.Author.PhoneNumber</strong>
+                </div>
+            </li>
+        </ul>
+        <div class="offer-sidebar__links">
+            <a href="#">Докладвай за нередност</a>
+        </div>
+    </div>
+</div>
+

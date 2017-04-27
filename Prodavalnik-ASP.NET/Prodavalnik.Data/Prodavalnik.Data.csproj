@@ -58,17 +58,9 @@
     <Compile Include="Contracts\IProdavalnikContext.cs" />
     <Compile Include="Contracts\IProdavalnikData.cs" />
     <Compile Include="Contracts\IRepository.cs" />
-    <Compile Include="Migrations\201704071614356_Initial.cs" />
-    <Compile Include="Migrations\201704071614356_Initial.Designer.cs">
-      <DependentUpon>201704071614356_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704091423355_Initial1.cs" />
-    <Compile Include="Migrations\201704091423355_Initial1.Designer.cs">
-      <DependentUpon>201704091423355_Initial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704111455105_Initial2.cs" />
-    <Compile Include="Migrations\201704111455105_Initial2.Designer.cs">
-      <DependentUpon>201704111455105_Initial2.cs</DependentUpon>
+    <Compile Include="Migrations\201704271627379_Initial.cs" />
+    <Compile Include="Migrations\201704271627379_Initial.Designer.cs">
+      <DependentUpon>201704271627379_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProdavalnikContext.cs" />
@@ -87,14 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704071614356_Initial.resx">
-      <DependentUpon>201704071614356_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704091423355_Initial1.resx">
-      <DependentUpon>201704091423355_Initial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704111455105_Initial2.resx">
-      <DependentUpon>201704111455105_Initial2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704271627379_Initial.resx">
+      <DependentUpon>201704271627379_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

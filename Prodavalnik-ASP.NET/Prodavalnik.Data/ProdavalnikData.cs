@@ -16,6 +16,7 @@
         public IRepository<Ad> Ads => new Repository<Ad>(this.context);
         public IRepository<Category> Categories => new Repository<Category>(this.context);
         public IRepository<Image> Images => new Repository<Image>(this.context);
+        public IRepository<Message> Messages => new Repository<Message>(this.context);
         public IProdavalnikContext Context => this.context;
         public int SaveChanges()
         {

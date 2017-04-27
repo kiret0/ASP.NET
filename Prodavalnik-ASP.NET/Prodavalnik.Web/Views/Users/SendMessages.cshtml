@@ -1,0 +1,53 @@
+﻿@using System.Globalization
+@model IEnumerable<Prodavalnik.Models.ViewModels.User.MessageViewModel>
+@{
+    ViewBag.Title = "Messages";
+}
+
+<h2>Съобщения</h2>
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li><a href="/profile">Обяви</a></li>
+        <li class="active"><a href="/messages">Съобщения</a></li>
+        <li><a href="/profile/settings">Настройки</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <ul class="nav nav-pills">
+            <li><a href="/profile/messages">Получени</a></li>
+            <li class="active"><a href="/messages/send">Изпратени</a></li>
+        </ul>
+        <div class="tab-pane fade in active">
+            <h3>Изпратени</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Подател</th>
+                        <th>Обява</th>
+                        <th>Дата</th>
+                    </tr>
+                    @foreach (var message in Model)
+                    {
+                        <tr>
+                            <td>Аз</td>
+                            <td>@message.Ad.Title <br /> @message.Content</td>
+                            <td>
+                                @if (@message.DateOfSent.Date == DateTime.Today)
+                                {
+                                    <span>днес, @message.DateOfSent.Hour</span>
+                                }
+                                else
+                                {
+                                    <span>@message.DateOfSent.Date.ToString("M", new CultureInfo("bg-BG"))</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+

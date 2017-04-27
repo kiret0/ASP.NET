@@ -22,10 +22,10 @@ namespace Prodavalnik.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/sitejs").Include(
-                      "~/Scripts/site.js"));
+                      "~/Scripts/sitee.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css",
+                      "~/Content/siteе.css",
                       "~/Content/bootstrap.css",
                       "~/Content/awesome-bootstrap-checkbox.css"));
         }

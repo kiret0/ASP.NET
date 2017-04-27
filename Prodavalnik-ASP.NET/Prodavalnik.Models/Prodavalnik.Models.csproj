@@ -82,11 +82,13 @@
   <ItemGroup>
     <Compile Include="BindingModels\AddCategoryBindingModel.cs" />
     <Compile Include="BindingModels\Ads\AddAdsBindingModel.cs" />
+    <Compile Include="BindingModels\SendMessageBindingModel.cs" />
     <Compile Include="EntityModels\Ad.cs" />
     <Compile Include="EntityModels\ApplicationUser.cs" />
     <Compile Include="EntityModels\Category.cs" />
     <Compile Include="EntityModels\Enums\State.cs" />
     <Compile Include="EntityModels\Image.cs" />
+    <Compile Include="EntityModels\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
@@ -97,7 +99,9 @@
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\Ads\AdCategoryViewModel.cs" />
     <Compile Include="ViewModels\Ads\AddAdViewModel.cs" />
+    <Compile Include="ViewModels\Ads\AdMessageDetailsViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdsViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdViewModel.cs" />
     <Compile Include="ViewModels\Ads\PreviewAdViewModel.cs" />
@@ -114,6 +118,9 @@
     <Compile Include="ViewModels\Manage\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\User\MessageDetailsViewModel.cs" />
+    <Compile Include="ViewModels\User\MessageViewModel.cs" />
+    <Compile Include="ViewModels\User\MyAdViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

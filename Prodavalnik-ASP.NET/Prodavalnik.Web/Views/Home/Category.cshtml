@@ -4,5 +4,36 @@
     ViewBag.Title = "Category";
 }
 
-<h2>Category</h2>
+@Html.Partial("_SearchBox", Model.Categories)
+
+<h3>Нови обяви</h3>
+<h5>Намерени @Model.Ads.Count() обяви</h5>
+<div class="container" id="box">
+   
+    @foreach (var ad in Model.Ads)
+    {
+        <div class="row">
+            <div class="col-md-10">
+                <div class="title-style"><a href="/ads/@ad.Title">@ad.Title</a></div>
+                @if (ad.Images.Count() != 0)
+                {
+                    <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title" />
+                }
+                else
+                {
+                    <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title" />
+                }
+                <div class="list-inline">
+                    <div>
+                        <a href="category/@ad.CategoryName">@ad.CategoryName</a>
+                    </div>
+                </div>
+                <div class="list-inline">
+                    <div>@ad.PublishOn.ToShortDateString()</div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    }
+</div>
 

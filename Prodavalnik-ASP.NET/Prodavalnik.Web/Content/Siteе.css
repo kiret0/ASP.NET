@@ -1,0 +1,194 @@
+﻿html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, sub, sup, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+}
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.fleft {
+    float: left
+}
+
+.span-or {
+    margin-left: 25px;
+}
+.login-btn:hover {
+    text-decoration: none;
+    opacity: .9
+}
+.login-btn {
+    width: 100%;
+    padding: 12px 0;
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+    border: none;
+    border-radius: 3px;
+    background: #1899ce;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer
+}
+.btn-facebook {
+    
+    background: #3b5998;
+    font-size: 13px;
+    width: 30%
+}
+
+.btn-facebook:before {
+    background: url(https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/256/social_facebook_box_white.png);
+    width: 10px;
+    height: 10px;
+    left: 10px;
+    top: 10px;
+    font-size: 22px
+}
+.search-box {
+    background: #1899ce;
+    height: 65px;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: -20px;
+}
+.search-btn {
+    margin-left: 295px;
+    width: 100px;
+}
+.search-input {
+    width: 300px;
+}
+.menu-dropdown {
+    padding: 6px;
+    margin-right: -20px;
+}
+.menu-button {
+    padding: 15px;
+    margin-right: 70px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.title-style {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.offercontent {
+    width: 616px;
+    word-wrap: break-word;
+}
+.offer-sidebar {
+    width: 252px;
+    float: right;
+    position: relative;
+    z-index: 2;
+}
+.detailpage .offeractions {
+    width: 252px;
+}
+.offer-sidebar__inner {
+    width: 252px;
+}
+.offeractions {
+    top: 0;
+    width: 241px;
+}
+.offer-sidebar .price-label {
+    padding: 9px 5px;
+    margin: 0 0 10px -5px;
+    position: relative;
+    border: 1px solid #efefef;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background: #fff;
+    color: #414e41;
+    text-align: center;
+    line-height: 34px;
+    height: 49px;
+    z-index: 2;
+}
+.offer-sidebar__buttons {
+    margin-bottom: 15px;
+}
+.offer-sidebar__buttons li {
+        margin-bottom: 8px;
+}
+li {
+    list-style: none;
+}
+.offer-sidebar__buttons .contact-button {
+    display: block;
+    padding: 12px 15px 12px 50px;
+    border: 1px solid #efefef;
+    font-weight: 700;
+    border-radius: 4px;
+    position: relative;
+    color: #fff;
+    font-size: 18px;
+    background: #0098d0;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+.offer-sidebar__buttons .contact-button [data-icon=message] {
+    font-size: 20px;
+    top: 11px;
+    left: 17px;
+}
+.offer-sidebar__buttons .contact-button [data-icon] {
+    position: absolute;
+}
+table.breakword td, .brkword {
+    word-wrap: break-word;
+}
+.rel {
+    position: relative;
+}
+.xx-large {
+    font-size: 18px;
+}
+

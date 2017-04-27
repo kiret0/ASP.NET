@@ -13,6 +13,8 @@
 
         IDbSet<Image> Images { get; }
 
+        IDbSet<Message> Messages { get; }
+
         int SaveChanges();
         IDbSet<T> Set<T>()
            where T : class;

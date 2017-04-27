@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using Base;
     using Data.Contracts;
     using System.Web.Mvc;
@@ -41,8 +42,27 @@
         [Route("~/category/{categoryName}")]
         public ActionResult Category(string categoryName)
         {
+            var categories = this.service.GetAllCategories();
+            var cats = new List<SelectListItem>();
+            
+            foreach (var category in categories)
+            {
+                var selectItem = new SelectListItem()
+                {
+                    Text = category.Name,
+                    Value = category.Id.ToString()
+                };
+                if (category.Name == categoryName)
+                {
+                    selectItem.Selected = true;
+                }
+                cats.Add(selectItem);
+            }
+
             var categoryFromDb = service.FindCategoryByName(categoryName);
             CategoryWithAdsViewModel categoryVm = Mapper.Map<Category, CategoryWithAdsViewModel>(categoryFromDb);
+            categoryVm.Categories = cats;
+
             return View(categoryVm);
         }
     }

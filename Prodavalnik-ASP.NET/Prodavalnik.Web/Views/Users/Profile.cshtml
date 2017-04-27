@@ -1,0 +1,63 @@
+﻿@using System.Globalization
+@model IEnumerable<Prodavalnik.Models.ViewModels.User.MyAdViewModel>
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Мойте обяви</h2>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="profile">Обяви</a></li>
+        <li><a  href="profile/messages">Съобщения</a></li>
+        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>Активни обяви</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th width="65">Дата</th>
+                        <th width="42"></th>
+                        <th>Заглавие</th>
+                        <th width="95">Цена</th>
+                    </tr>
+                    @foreach (var myAd in Model)
+                    {
+                        <tr>
+                            @if (myAd.PublishOn.Date == DateTime.Today)
+                            {
+                                <td>от: днес <br /> до: @myAd.PublishOn.Date.ToString("M", new CultureInfo("bg-BG"))</td>
+                            }
+                            else
+                            {
+                                <td>от: @myAd.PublishOn.Date.ToString("M", new CultureInfo("bg-BG")) <br /> до: @(myAd.PublishOn.Date.AddDays(30).ToString("M", new CultureInfo("bg-BG")))</td>
+                            }
+                            <td>
+                                @if (myAd.Images.Count() == 0)
+                                {
+                                    <img src="" alt="" width="30px" />
+                                }
+                                else
+                                {
+                                    <img src="../../UploadsImages/@myAd.Images.First().ImageName" alt="@myAd.Images.First().ImageName" width="35px" />
+                                }
+                            </td>
+                            <td>
+                                @myAd.Title
+                                <br />
+                                <a href="ad/@myAd.Title">Преглед</a>
+                                <a href="ad/edit/@myAd.Title/">Редактирай</a>
+                                <a href="ad/delete/@myAd.Title">Изтрии</a>
+                            </td>
+                            <td>@myAd.Price лв.</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -11,6 +11,7 @@ namespace Prodavalnik.Web.Controllers
     using Base;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
+    using Models.BindingModels;
     using Models.BindingModels.Ads;
     using Models.EntityModels;
     using Models.EntityModels.Enums;
@@ -30,19 +31,25 @@ namespace Prodavalnik.Web.Controllers
 
         [AllowAnonymous]
         [Route("~/ads")]
-        public ActionResult Index(string query)
+        public ActionResult Index(string search, string category,bool? FWDescription, bool? fwPicture, decimal? priceFrom, decimal? priceTo)
         {
             var categories = this.service.GetAllCategories();
-
-            var cats = categories.Select(c => new SelectListItem()
+            var cats = new List<SelectListItem>();
+            cats.Add(new SelectListItem()
             {
-                Text = c.Name,
-                Value = c.Id.ToString(),
+                Text = "Всички категории",
+                Value = "0",
                 Selected = true
-
             });
 
-            var adsFromDb = this.service.FindingAdsByQuery(query);
+            cats.AddRange(categories.Select(c => new SelectListItem()
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            }));
+
+
+            var adsFromDb = this.service.FindingAdsWithFilters(search, category, FWDescription, fwPicture, priceFrom, priceTo);
             IEnumerable<PreviewAdViewModel> ads = Mapper.Map<IEnumerable<Ad>, IEnumerable<PreviewAdViewModel>>(adsFromDb);
             
             AdsViewModel adsVm = new AdsViewModel()
@@ -53,10 +60,13 @@ namespace Prodavalnik.Web.Controllers
             return View(adsVm);
         }
 
-        // GET: Ads/Details/5
-        public ActionResult Details(int id)
+        [Route("~/ad/{adName}")]
+        public ActionResult AdDetails(string adName)
         {
-            return View();
+            var adEntity = this.service.GetAdByName(adName);
+            AdViewModel ad = Mapper.Map<Ad, AdViewModel>(adEntity);
+            
+            return View(ad);
         }
 
         [Route("add")]
@@ -64,14 +74,20 @@ namespace Prodavalnik.Web.Controllers
         {
             var categories = this.service.GetAllCategories();
 
-             var cats= categories.Select(c => new SelectListItem()
+            var cats = new List<SelectListItem>();
+            cats.Add(new SelectListItem()
+            {
+                Text = "Избери категория",
+                Value = "0",
+                Selected = true
+            });
+
+            cats.AddRange(categories.Select(c => new SelectListItem()
             {
                 Text = c.Name,
-                Value = c.Id.ToString(),
-                Selected = true
+                Value = c.Id.ToString()
+            }));
 
-            });
-            
             AddAdViewModel advm = new AddAdViewModel()
             {
                 Categories = cats
@@ -128,6 +144,31 @@ namespace Prodavalnik.Web.Controllers
                 };
                 return View(advm);
             }
+        }
+
+        [Route("~/ad/sendmessage/{adName}")]
+        public ActionResult SendMessage(string adName)
+        {
+            var adFromDb = this.service.GetAdByName(adName);
+            AdMessageDetailsViewModel adViewModel = Mapper.Map<Ad, AdMessageDetailsViewModel>(adFromDb);
+            return View(adViewModel);
+        }
+
+        [Route("~/ad/sendmessage/{adName}")]
+        [HttpPost]
+        public ActionResult SendMessage([Bind(Exclude = "")] SendMessageBindingModel bind)
+        {
+            var ad = this.service.GetAdByName(bind.AdName);
+            var sender = this.service.GetUserById(User.Identity.GetUserId());
+            var recipient = this.service.GetUserByEmail(ad.Author.Email);
+            if (sender == ad.Author)
+            {
+                AdMessageDetailsViewModel adViewModel = Mapper.Map<Ad, AdMessageDetailsViewModel>(ad);
+                ModelState.AddModelError("","Не може да пращаш съобщение, на себе си.");
+                return View(adViewModel);
+            }
+            this.service.AddMessage(ad, sender, recipient, bind.MessageContent);
+            return RedirectToAction("Messages","Users");
         }
 
         // GET: Ads/Edit/5

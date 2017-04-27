@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Web;
+    using System.Web.ModelBinding;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -19,20 +21,420 @@
         }
 
 
-        public IEnumerable<Ad> FindingAdsByQuery(string query)
+        public IEnumerable<Ad> FindingAdsWithFilters(string query, string category, bool? FWDescription, bool? fwPicture, decimal? priceFrom, decimal? priceTo)
         {
-            IEnumerable<Ad> ads;
-            if (string.IsNullOrEmpty(query))
-            {
-                ads = this.data.Ads.GetAll().OrderByDescending(ad => ad.PublishOn);
-            }
-            else
-            {
-                ads = this.data.Ads.Find(ad => ad.Title.Contains(query) || ad.Description.Contains(query))
-                    .OrderByDescending(ad => ad.PublishOn);
-            }
+            IEnumerable<Ad> ads = FilteringAndReturnAds(query, category, FWDescription, fwPicture, priceFrom, priceTo);
+
+            
             return ads;
         }
+
+        private IEnumerable<Ad> FilteringAndReturnAds(string query, string category, bool? FWDescription, bool? fwPicture, decimal? priceFrom, decimal? priceTo)
+        {
+            IEnumerable<Ad> allAds = this.data.Ads.GetAll().OrderByDescending(ad => ad.PublishOn);
+            IEnumerable<Ad> filteringAds = null;
+            
+            if (string.IsNullOrEmpty(query))
+            {
+                filteringAds = allAds;
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(ad => ad.Title.Contains(query));
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(ad => ad.Title.Contains(query) && ad.Category.Id == int.Parse(category));
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                (category == "0" || category == null) &&
+                FWDescription == true &&
+                (fwPicture == false || fwPicture == null) &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) ||
+                        ad.Description.Contains(query));
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) && ad.Images.Count != 0);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) && ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) && ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category));
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Images.Count != 0);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query)||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == false &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == false &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => ad.Title.Contains(query) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category == "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo == null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom == null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price <= priceTo);
+            }
+            else if (!string.IsNullOrEmpty(query) &&
+                category != "0" &&
+                FWDescription == true &&
+                fwPicture == true &&
+                priceFrom != null &&
+                priceTo != null)
+            {
+                filteringAds = allAds.Where(
+                        ad => (ad.Title.Contains(query) ||
+                        ad.Description.Contains(query)) &&
+                        ad.Category.Id == int.Parse(category) &&
+                        ad.Images.Count != 0 &&
+                        ad.Price >= priceFrom &&
+                        ad.Price <= priceTo);
+            }
+            return filteringAds;
+        }
+        
 
         public IEnumerable<Category> GetAllCategories()
         {
@@ -73,6 +475,33 @@
             };
             this.data.Ads.InsertOrUpdate(ad);
             this.data.SaveChanges();
+        }
+
+        public Ad GetAdByName(string adName)
+        {
+            adName = WebUtility.UrlDecode(adName);
+            var ad = this.data.Ads.FindByPredicate(a => a.Title == adName);
+            return ad;
+        }
+
+        public void AddMessage(Ad ad, ApplicationUser sender, ApplicationUser recipient, string messageContent)
+        {
+            var message = new Message()
+            {
+                Content = messageContent,
+                Sender = sender,
+                Recipient = recipient,
+                DateOfSent = DateTime.Now,
+                Ad = ad
+            };
+            this.data.Messages.InsertOrUpdate(message);
+            this.data.SaveChanges();
+        }
+
+        public ApplicationUser GetUserByEmail(string recipientEmail)
+        {
+            var user = this.data.Users.FindByPredicate(u => u.Email == recipientEmail);
+            return user;
         }
     }
 }

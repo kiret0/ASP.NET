@@ -1,0 +1,45 @@
+﻿@using System.Globalization
+@model Prodavalnik.Models.ViewModels.Ads.AdMessageDetailsViewModel
+@{
+    ViewBag.Title = "SendMessage";
+}
+
+<h2>SendMessage</h2>
+
+<div class="container">
+    <div class="title-style ">
+        @Model.Title
+    </div>
+    <div class="visible-lg-inline">
+        <div>@Model.Price</div>
+    </div>
+    <hr />
+    <div>
+        <div>
+            <span>Номер на обявата: @Model.Id</span> |
+            <span>Добавена в @Model.PublishOn.ToString("HH:mm"), @Model.PublishOn.ToString("dd MMMM yyyy", new CultureInfo("bg-BG"))</span> |
+            <span>@Model.State</span>
+        </div>
+
+        <div>@Model.Description</div>
+    </div>
+    <hr />
+    <h2>Твоето съобщение</h2>
+    <hr />
+    <div>@Model.Author.PhoneNumber</div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.TextArea("messageContent")
+        @Html.Hidden("AdName",new {adName = Model.Title})
+
+        <input class="btn btn-info" type="submit" value="Изпрати"/> 
+    }
+</div>
+
+
+

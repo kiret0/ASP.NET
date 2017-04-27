@@ -11,6 +11,7 @@ namespace Prodavalnik.Web
     using Models.ViewModels.Ads;
     using Models.ViewModels.Categories;
     using Models.ViewModels.Home;
+    using Models.ViewModels.User;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -27,14 +28,27 @@ namespace Prodavalnik.Web
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Category, CategoryWithAdsViewModel>();
+                cfg.CreateMap<Category, CategoryWithAdsViewModel>()
+                    .ForMember(c => c.Ads, opts => opts.MapFrom(c => c.Ads.OrderByDescending(ad => ad.PublishOn)));
+
                 cfg.CreateMap<Category, CategoryViewModel>();
-                cfg.CreateMap<Ad, AdViewModel>();
+                cfg.CreateMap<Ad, AdViewModel>()
+                    .ForMember(ad => ad.CategoryName, opts => opts.MapFrom(ad => ad.Category.Name)); 
+
+                cfg.CreateMap<Ad, AdCategoryViewModel>()
+                    .ForMember(ad => ad.CategoryName, opts => opts.MapFrom(ad => ad.Category.Name));
+
                 cfg.CreateMap<AddCategoryBindingModel, Category>();
                 cfg.CreateMap<Ad, PreviewAdViewModel>()
-                    .ForMember(ad => ad.CategoryId, opts => opts.MapFrom(ad => ad.Category.Id))
                     .ForMember(ad => ad.CategoryName, opts => opts.MapFrom(ad => ad.Category.Name));
+
                 cfg.CreateMap<Ad, HomeAdViewModel>();
+                cfg.CreateMap<Ad, MyAdViewModel>();
+                cfg.CreateMap<Message, MessageViewModel>()
+                .ForMember(m => m.Sender, opts => opts.MapFrom(m => m.Sender));
+                cfg.CreateMap<Ad, AdMessageDetailsViewModel>();
+                cfg.CreateMap<Message, MessageDetailsViewModel>();
+
             });
         }
     }
