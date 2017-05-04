@@ -1,0 +1,25 @@
+﻿@model Prodavalnik.Models.ViewModels.Admin.AdminPanelViewModel
+@{
+    ViewBag.Title = "Admin Panel";
+}
+
+<h2>Admin Panel</h2>
+<div class="inline">
+    <a class="btn btn-primary btn-lg" href="/admin/category/add">Add Category</a>
+</div>
+<div class="inline">
+    <a class="btn btn-success btn-lg" href="/admin/addAdmin">Add Admin</a>
+</div>
+<div class="inline">
+    <a class="btn btn-danger btn-lg" href="/admin/reports">Reports
+    @if (@Model.ReportsUnreadCount != 0)
+    {
+        <span class="badge">@Model.ReportsUnreadCount</span>
+    }
+    </a>
+</div>
+<br/><br/>
+<div>
+    <p><strong>All registered users: @Model.RegisteredUserCount</strong></p>
+</div>
+

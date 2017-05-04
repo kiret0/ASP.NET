@@ -1,6 +1,7 @@
 ﻿namespace Prodavalnik.Models.EntityModels
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
@@ -11,10 +12,15 @@
         public ApplicationUser()
         {
             this.Messages = new HashSet<Message>();
+            this.Ads = new HashSet<Ad>();
         }
+
+        
         public string Name { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
+
+        public virtual ICollection<Ad> Ads { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

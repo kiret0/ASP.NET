@@ -7,7 +7,9 @@ namespace Prodavalnik.Web
     using System.Linq;
     using AutoMapper;
     using Models.BindingModels;
+    using Models.BindingModels.Admin;
     using Models.EntityModels;
+    using Models.ViewModels.Admin;
     using Models.ViewModels.Ads;
     using Models.ViewModels.Categories;
     using Models.ViewModels.Home;
@@ -48,7 +50,9 @@ namespace Prodavalnik.Web
                 .ForMember(m => m.Sender, opts => opts.MapFrom(m => m.Sender));
                 cfg.CreateMap<Ad, AdMessageDetailsViewModel>();
                 cfg.CreateMap<Message, MessageDetailsViewModel>();
-
+                cfg.CreateMap<Report, ReportViewModel>();
+                cfg.CreateMap<Ad, EditAdViewModel>()
+                    .ForMember(ad => ad.CategoryName, opts => opts.MapFrom(ad => ad.Category.Name));
             });
         }
     }

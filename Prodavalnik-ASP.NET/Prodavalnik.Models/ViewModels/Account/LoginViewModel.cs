@@ -4,12 +4,12 @@ namespace Prodavalnik.Models.ViewModels.Account
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Имейлът е задължителен.")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Паролата е задължителна")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

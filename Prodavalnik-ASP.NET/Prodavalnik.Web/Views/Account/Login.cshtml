@@ -14,7 +14,7 @@
             </section>
         </div>
         <br/>
-        <div class="col-md-5 col-md-offset-6">
+        <div class="col-md-5 col-md-offset-6 div-or">
             <span class="span-or">ИЛИ</span>
         </div>
         <br/>
@@ -27,31 +27,30 @@
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                 <div class="form-group">
                     <div class="col-md-12 col-md-offset-5">
-                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "Имейл"})
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control form-input", placeholder = "Имейл"})
                         @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12 col-md-offset-5">
-                        @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = "Парола"})
+                        @Html.PasswordFor(m => m.Password, new {@class = "form-control form-input", placeholder = "Парола"})
                         @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-5">
-                        <div class="checkbox checkbox-info">
-                            @*                            @Html.CheckBoxFor(m => m.RememberMe, new{ id = "checkbox"})*@
+                        <div class="">
                             <input id="checkbox" type="checkbox" checked>
                             @Html.Label("запомни ме")
 
-                            @Html.ActionLink("Забравена парола?", "ForgotPassword")
+                            @Html.ActionLink("Забравена парола?", "ForgotPassword", null, new{ @class="forgot-password"})
 
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5 col-md-12">
-                        <input type="submit" value="Вход" class="btn btn-info btn-block"/>
+                        <input type="submit" value="Вход" class="btn btn-primary form-btn"/>
                     </div>
                 </div>
                 <div class="col-md-offset-5 col-md-12">

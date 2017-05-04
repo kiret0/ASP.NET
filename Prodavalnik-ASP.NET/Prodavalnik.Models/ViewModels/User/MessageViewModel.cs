@@ -8,7 +8,6 @@
         public int Id { get; set; }
 
         public ApplicationUser Sender { get; set; }
-        public ApplicationUser Recipient { get; set; }
 
         public string Content { get; set; }
 

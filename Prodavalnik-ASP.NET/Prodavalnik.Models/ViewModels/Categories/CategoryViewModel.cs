@@ -8,7 +8,7 @@
 
         public string Name { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImageName { get; set; }
 
         public IEnumerable<CategoryViewModel> SubCategories { get; set; }
     }

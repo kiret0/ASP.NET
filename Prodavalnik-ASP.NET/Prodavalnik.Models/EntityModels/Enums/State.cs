@@ -1,12 +1,13 @@
 ﻿namespace Prodavalnik.Models.EntityModels.Enums
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public enum State
     {
-        [Description("Ново")]
+        [Display(Name = "Ново")]
         New,
-        [Description("Използвано")]
+        [Display(Name = "Използвано")]
         Used
     }
 }

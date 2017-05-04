@@ -1,6 +1,7 @@
 ﻿namespace Prodavalnik.Web.Controllers
 {
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -307,10 +308,12 @@
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
+            
 
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);

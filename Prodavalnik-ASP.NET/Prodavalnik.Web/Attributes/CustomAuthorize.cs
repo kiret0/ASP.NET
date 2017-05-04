@@ -12,7 +12,7 @@
             {
                 filterContext.Result = new ViewResult()
                 {
-                    ViewName = "~/Views/Shared/Unauthorized.cshtml"
+                    ViewName = "~/Views/Error/NotFound.cshtml"
                 };
             }
             else

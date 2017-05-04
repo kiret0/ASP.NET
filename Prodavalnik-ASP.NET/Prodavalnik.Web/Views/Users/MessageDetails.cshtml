@@ -10,23 +10,20 @@
     <ul class="nav nav-tabs">
         <li><a href="/profile">Обяви</a></li>
         <li class="active"><a href="/profile/messages">Съобщения</a></li>
-        <li><a data-toggle="tab" href="/profile/settings">Настройки</a></li>
+        <li><a  href="/profile/settings">Настройки</a></li>
     </ul>
-    <br/>
     <div class="tab-content">
         <ul class="nav nav-pills">
-            <li class="active"><a href="/profile/messages">Получени</a></li>
-            <li><a href="/profile/messages/send">Изпратени</a></li>
+            <li><a href="/profile/messages">Назад</a></li>
         </ul>
-        <br/>
         <div class="tab-pane fade in active">
             <span>
                 <a href="/profile/@Model.Sender.Id">
                     @Model.Sender.Email.Substring(0, Model.Sender.Email.IndexOf("@"))
                 </a>
             </span>
-            <span>@Model.DateOfSent.ToString("f", new CultureInfo("bg-BG"))</span>
-            <div class="panel panel-success">
+            <span class="data-message-detail">@Model.DateOfSent.ToString("f", new CultureInfo("bg-BG"))</span>
+            <div class="panel panel-default">
 
                 <div class="panel-heading">
 
@@ -49,15 +46,16 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
+            <div class="panel panel-default panel-size-msg-deitals">
                 
                 <div class="panel-heading">
                     <h4>Изпрати съобщение</h4>
                     @using (@Html.BeginForm())
                     {
-                        @Html.Hidden("RecipientId", new { recipientId = Model.Sender.Id})
+                        @Html.Hidden("RecipientId", Model.Sender.Id)
+                        @Html.Hidden("AdName", Model.Ad.Title)
                         <div class="form-group">
-                            @Html.TextArea("MessageContent", null, new {@class = "form-control"})
+                            @Html.TextArea("MessageContent", null, new {@class = "form-control textarea-message-details"})
                         </div>
                         <div class="form-group">
                             <input class="btn btn-info" type="submit" value="Изпрати"/>

@@ -1,54 +1,124 @@
-﻿@model Prodavalnik.Models.ViewModels.Ads.AdViewModel
+﻿@using System.Globalization
+@using System.Web.UI.WebControls
+@using Prodavalnik.Models.EntityModels.Enums
+@model Prodavalnik.Models.ViewModels.Ads.AdViewModel
 @{
     ViewBag.Title = "AdDetails";
 }
+@if (User.IsInRole("Admin"))
+{
+    using (@Html.BeginForm("Delete","Ads", FormMethod.Post))
+    {
+        <div class="form-group admin-btn-delete">
+            <input type="submit" value="Delete" class="btn btn-danger btn-lg"/>
+        </div>
+    }
+}
+<div class="offer-sidebar">
+    <div class="">
+        <div class="price-label">
+            <strong>@Model.Price лв.</strong>
+        </div>
+        <ul class="">
+            <li class="send-message">
+                <a href="sendmessage/@Model.Title" class="btn btn-info btn-lg btn-sendMsg">
+                    <i data-icon="message"></i>
+                    <span>Изпрати съобщение</span>
+                </a>
+            </li>
+            <li>
+                <div class="btn btn-info btn-lg contact-phone">
+                    <i data-icon="phone"></i>
+                    <strong class="">@Model.Author.PhoneNumber</strong>
+                </div>
+            </li>
+        </ul>
+        <div class="">
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#reportAd">Докладвай за нередност</button>
 
-<div class="fleft offercontent rel">
-    <img src="../../UploadsImages/@Model.Images.First().ImageName" alt="@Model.Images.First().ImageName"/>
+            <!-- Modal -->
+            <div id="reportAd" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Докладвай за нередност</h4>
+                        </div>
+                        @using (@Html.BeginForm("ReportAd", "Ads", FormMethod.Post))
+                        {
+                            <div class="modal-body">
+                                <div>
+                                    <label><input type="radio" name="optradio" value="Spam" checked="checked">Спам</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="optradio" value="BadCategory">Грешна категория</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="optradio" value="Violation">Забранен артикул</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="optradio" value="Outofdate">Обявата не е актуална</label>
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextArea("ReportInfo", new
+                               {
+                                   @Class = "form-control textarea-report",
+                                   @PlaceHolder = "Ако добавиш допълнителна информация ще ни улесниш при проверката.Обявата ще бъде проверена от нашия екип.Ако желаеш да получиш отговор, свържи се с нас през формата за контакт"
+                               })
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Докладвай" class="btn btn-default" />
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offercontent">
+    <div class="img-details-div">
+        @if (Model.Images.Count() != 0)
+        {
+            <img src="../../UploadsImages/@Model.Images.First().ImageName" alt="@Model.Images.First().ImageName" class="img-details" />
+        }
+        else
+        {
+            <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@Model.Title" class="img-details" />
+        }
+    </div>
     <div>
         <h2>@Model.Title</h2>
     </div>
     <div>
         <span>Номер на обявата: @Model.Id</span>
-        <span>@Model.PublishOn</span>
+        <span class="data-details">Добавена в: @Model.PublishOn.ToString("HH:mm"), @Model.PublishOn.ToString("dd MMMM yyyy",new CultureInfo("bg-BG"))</span>
     </div>
     <div>
-        <span>Състояние</span>
-        <span>@Model.State</span>
+        <span>Състояние:</span>
+        <span>@if (Model.State == State.Used)
+              {
+                  <span>Използвано</span>
+              }
+              else
+              {
+                  <span>Ново</span>
+              }</span>
     </div>
-    <hr/>
+    <hr />
     <div>
         <p>@Model.Description</p>
     </div>
     @foreach (var image in Model.Images.Skip(1))
     {
-        <div>
-            <img src="../../UploadsImages/@image.ImageName" alt="@image.ImageName" />
+        <div class="img-details-div">
+            <img src="../../UploadsImages/@image.ImageName" alt="@image.ImageName" class="img-details" />
         </div>
     }
-</div>
-<div class="offer-sidebar">
-    <div class="offer-sidebar__inner offeractions">
-        <div class="price-label">
-            <strong>@Model.Price</strong>
-        </div>
-        <ul class="offer-sidebar__buttons contact_methods">
-            <li>
-                <a href="sendmessage/@Model.Title" class="contact-button button-email">
-                    <i data-icon="message"></i>
-                    <span class="contactbox-indent rel brkword">Изпрати съобщение</span>
-                </a>
-            </li>
-            <li>
-                <div class="contact-button link-phone">
-                    <i data-icon="phone"></i>
-                    <strong class="xx-large">@Model.Author.PhoneNumber</strong>
-                </div>
-            </li>
-        </ul>
-        <div class="offer-sidebar__links">
-            <a href="#">Докладвай за нередност</a>
-        </div>
-    </div>
 </div>
 

@@ -1,5 +1,6 @@
 ﻿namespace Prodavalnik.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
@@ -7,7 +8,10 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
+    using Models.BindingModels.Users;
+    using Models.EntityModels;
     using Models.ViewModels.Manage;
+    using Models.ViewModels.User;
 
     [Authorize]
     public class ManageController : Controller
@@ -214,21 +218,30 @@
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
+//        public ActionResult ChangePassword()
+//        {
+//            return View();
+//        }
 
         //
         // POST: /Manage/ChangePassword
+        [Route("profile/settings/changePassword")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword([Bind(Exclude = "")] ChangePasswordViewModel model)
         {
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var settingViewModel = new SettingsViewModel()
+            {
+                CurrentUser = currentUser,
+                ChangePasswordViewModel = model
+            };
+
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("Settings", "Users", settingViewModel);
             }
+            
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
@@ -237,10 +250,68 @@
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Settings","Users", new { Message = "Успешно смени паролата" });
             }
             AddErrors(result);
-            return View(model);
+            
+            return RedirectToAction("Settings", "Users", settingViewModel);
+        }
+
+        [Route("profile/settings/changeEmail")]
+        [HttpPost]
+        public async Task<ActionResult> ChangeEmail([Bind(Exclude = "")] ChangeEmailBindingModel bind)
+        {
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var settingViewModel = new SettingsViewModel()
+            {
+                CurrentUser = currentUser
+            };
+
+            if (ModelState.IsValid)
+            {
+                var validPassword = await UserManager.CheckPasswordAsync(currentUser, bind.CurrentPassword);
+                if (validPassword)
+                {
+                    currentUser.Email = bind.Email;
+                    currentUser.UserName = bind.Email;
+                    
+                    await UserManager.UpdateAsync(currentUser);
+                    return RedirectToAction("Settings", "Users", new {Message = "Успешно смени имейла"});
+                }
+            }
+
+            return RedirectToAction("Settings", "Users", settingViewModel);
+        }
+        [Route("manage/deleteProfile")]
+        public async Task<ActionResult> DeleteProfile()
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = await UserManager.FindByIdAsync(userId);
+                var logins = user.Logins;
+                var rolesForUser = await UserManager.GetRolesAsync(userId);
+
+                foreach (var login in logins.ToList())
+                {
+                    await UserManager.RemoveLoginAsync(login.UserId,
+                        new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                }
+
+                if (rolesForUser.Count() > 0)
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        var result = await UserManager.RemoveFromRoleAsync(user.Id, item);
+                    }
+                }
+                
+                
+                await UserManager.DeleteAsync(user);
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            }
+            
+            return RedirectToAction("Index", "Home");
         }
 
         //

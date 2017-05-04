@@ -1,56 +1,74 @@
 ﻿@using System.Web.Razor.Generator
 @model Prodavalnik.Models.ViewModels.Home.HomeViewModel
-    @{
-        ViewBag.Title = "Продавалник - Безплани обяви";
-
-    }
+@{
+    ViewBag.Title = "Продавалник - Безплани обяви";
+    int count = 1;
+}
 
 <div class="container">
     <div class="jumbotron">
         <div class="search-box">
             @using (Html.BeginForm("Index", "Ads", FormMethod.Get, new { @class = "form-inline" }))
             {
-               
+
                 <div class="form-group search-input">
                     @Html.TextBox("Search", null, new { @class = "form-control search-input", placeholder = "Търсене..." })
                 </div>
 
                 <div class="form-group search-btn">
                     <input class="btn btn-default search-btn" type="submit" value="Търси" />
-                </div>   
+                </div>
                 @Html.CheckBox("FWDescription", true, new { @class = "hidden" })
             }
         </div>
         <div class="category-list">
-            @foreach (var cat in Model.CategoryViewModel)
-            {
-                <div class="category-item">
-                    <span class="category-icon"><img src="@cat.ImageUrl" width="25px" /></span>
-                    @Html.ActionLink(@cat.Name, "Category", "Home", new { categoryName = cat.Name, }, new { @class = "category-name" })
-                </div>
-            }
+            <div class="row">
+                @foreach (var cat in Model.CategoryViewModel)
+                {
+                    <div class="category-item inline col-category col-md-3">
+                        <span class="category-icon"><img src="../../UploadsImages/Category-Icons/@cat.ImageName" /></span>
+                        <div class="inline">
+                            @Html.ActionLink(@cat.Name, "Category", "Home", new { categoryName = cat.Name, }, new { @class = "category-name" })
+                        </div>
+                    </div>
+                    
+                }
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-10">
+    <div class="newest-ad">
+        <h3>НАЙ-НОВИ ОБЯВИ</h3>
+    </div>
+    <div class="row-ad row">
+        <div class="col-md-12">
             @foreach (var ad in Model.AdsViewModel)
             {
-                <div class="col-md-3">
-                    <div class="thumbnail">
-                        <a href="ad/@ad.Title" title="@ad.Title">
-                            @if (ad.Images.Count() != 0)
-                            {
-                                <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title" />
-                            }
-                            else
-                            {
-                                <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title" />
-                            }
+                <div class="col-ad col-md-3">
+                    <div class="thumb">
+                        <div class="thumb-inner">
+                            <a href="ad/@ad.Title" title="@ad.Title">
+                                @if (ad.Images.Count() != 0)
+                                {
+                                    <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title" class="img-thumb"/>
+                                }
+                                else
+                                {
+                                    <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title" class="img-thumb"/>
+                                }
 
-                            <h3 class="title-style">@ad.Title</h3>
 
-                        </a>
-                        <div >@ad.Price.ToString("0.###") лв.</div>
+
+                            </a>
+                        </div>
+                        <div class="inner">
+                            <div class="home-ad-title">
+                                <a href="/ad/@ad.Title" title="@ad.Title">
+                                    <h4>@ad.Title</h4>
+                                </a>
+                            </div>
+                            <div class="home-ad-price">@ad.Price лв.</div>
+                        </div>
+                        
                     </div>
                 </div>
             }

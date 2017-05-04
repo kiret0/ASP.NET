@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 namespace Prodavalnik.Web.Controllers
 {
+    using System.Web.Security;
     using AutoMapper;
     using Base;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Models.BindingModels;
+    using Models.BindingModels.Users;
     using Models.EntityModels;
     using Models.ViewModels.User;
     using Services;
@@ -70,5 +72,53 @@ namespace Prodavalnik.Web.Controllers
             return RedirectToAction("SendMessages", "Users");
         }
 
+        [Route("settings")]
+        public ActionResult Settings(string message)
+        {
+            var user = this.service.GetUserById(User.Identity.GetUserId());
+            var settingsViewModel = new SettingsViewModel()
+            {
+                CurrentUser = user
+            };
+            ViewBag.StatusMessage = message;
+            return View(settingsViewModel);
+        }
+
+        [Route("settings/editProfile")]
+        [HttpPost]
+        public ActionResult EditProfile([Bind(Exclude = "")] EditProfileBindingModel bind)
+        {
+            var currentUser = this.service.GetUserById(User.Identity.GetUserId());
+            var settingsViewModel = new SettingsViewModel()
+            {
+                CurrentUser = currentUser
+            };
+            if (ModelState.IsValid)
+            {
+                
+                this.service.EditProfile(currentUser, bind);
+
+            }
+            return RedirectToAction("Settings", "Users", new {Message = "Успеншо редактирахте профила" });
+        }
+
+        [Route("ad/delete")]
+        [HttpPost]
+        public ActionResult DeleteAd([Bind(Exclude = "")] DeleteMyAdBindingModel bind)
+        {
+            var ad = this.service.GetAdById(bind.AdId);
+            this.service.DeleteAd(ad);
+            return RedirectToAction("Profile");
+        }
+
+        [Route("settings/deleteProfile")]
+        [HttpPost]
+        public ActionResult DeleteProfile()
+        {
+            var user = this.service.GetUserById(User.Identity.GetUserId());
+            this.service.RemoveAds(user);
+            this.service.RemoveMessages(user);
+            return RedirectToAction("DeleteProfile", "Manage", new {area = ""});
+        }
     }
 }

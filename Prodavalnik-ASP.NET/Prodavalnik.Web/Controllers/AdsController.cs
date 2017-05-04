@@ -31,7 +31,7 @@ namespace Prodavalnik.Web.Controllers
 
         [AllowAnonymous]
         [Route("~/ads")]
-        public ActionResult Index(string search, string category,bool? FWDescription, bool? fwPicture, decimal? priceFrom, decimal? priceTo)
+        public ActionResult Index(string search, string category, bool? fWDescription, bool? fwPicture, decimal? priceFrom, decimal? priceTo)
         {
             var categories = this.service.GetAllCategories();
             var cats = new List<SelectListItem>();
@@ -49,9 +49,9 @@ namespace Prodavalnik.Web.Controllers
             }));
 
 
-            var adsFromDb = this.service.FindingAdsWithFilters(search, category, FWDescription, fwPicture, priceFrom, priceTo);
+            var adsFromDb = this.service.FindingAdsWithFilters(search, category, fWDescription, fwPicture, priceFrom, priceTo);
             IEnumerable<PreviewAdViewModel> ads = Mapper.Map<IEnumerable<Ad>, IEnumerable<PreviewAdViewModel>>(adsFromDb);
-            
+
             AdsViewModel adsVm = new AdsViewModel()
             {
                 previewAdViewModels = ads,
@@ -60,13 +60,24 @@ namespace Prodavalnik.Web.Controllers
             return View(adsVm);
         }
 
+        [AllowAnonymous]
         [Route("~/ad/{adName}")]
         public ActionResult AdDetails(string adName)
         {
             var adEntity = this.service.GetAdByName(adName);
             AdViewModel ad = Mapper.Map<Ad, AdViewModel>(adEntity);
-            
+
             return View(ad);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("~/ad/{adName}/report")]
+        public ActionResult ReportAd([Bind(Exclude = "")] ReportAdBindingModel bind, string adName)
+        {
+            var adEntity = this.service.GetAdByName(adName);
+            this.service.ReportAd(adEntity, bind);
+            return RedirectToAction("AdDetails");
         }
 
         [Route("add")]
@@ -121,10 +132,12 @@ namespace Prodavalnik.Web.Controllers
                 {
                     var category = this.service.GetCategoryById(bind.CategoryId);
                     var user = this.service.GetUserById(User.Identity.GetUserId());
-                    
+
                     this.service.AddAdToDatabase(category, user, imgs, bind);
+                    return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index","Home");
+                ModelState.AddModelError("","Fuck!!!");
+                throw new Exception();
             }
             catch
             {
@@ -164,28 +177,50 @@ namespace Prodavalnik.Web.Controllers
             if (sender == ad.Author)
             {
                 AdMessageDetailsViewModel adViewModel = Mapper.Map<Ad, AdMessageDetailsViewModel>(ad);
-                ModelState.AddModelError("","Не може да пращаш съобщение, на себе си.");
+                ModelState.AddModelError("", "Не може да пращаш съобщение, на себе си.");
                 return View(adViewModel);
             }
             this.service.AddMessage(ad, sender, recipient, bind.MessageContent);
-            return RedirectToAction("Messages","Users");
+            return RedirectToAction("Messages", "Users");
         }
 
-        // GET: Ads/Edit/5
-        public ActionResult Edit(int id)
+        [Route("~/ad/{adName}/edit")]
+        public ActionResult Edit(string adName)
         {
-            return View();
+            var adEntity = this.service.GetAdByName(adName);
+
+            EditAdViewModel editAdViewModel = Mapper.Map<Ad, EditAdViewModel>(adEntity);
+            return View(editAdViewModel);
         }
 
-        // POST: Ads/Edit/5
+        [Route("~/ad/{adName}/edit")]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Exclude = "")] EditAdBindingModel bind, HttpPostedFileBase[] images)
         {
             try
             {
-                // TODO: Add update logic here
+                var imgs = new HashSet<Image>();
 
-                return RedirectToAction("Index");
+                foreach (var image in images)
+                {
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(image.FileName);
+                        var path = Path.Combine(Server.MapPath("~/UploadsImages"), fileName);
+                        image.SaveAs(path);
+
+                        var img = new Image() { ImageName = fileName };
+                        imgs.Add(img);
+                    }
+
+                }
+                if (ModelState.IsValid)
+                {
+                    var ad = this.service.GetAdByName(bind.EditAdName);
+                    this.service.EditAd(ad, bind);
+                }
+
+                return RedirectToAction("Profile", "Users");
             }
             catch
             {
@@ -193,26 +228,13 @@ namespace Prodavalnik.Web.Controllers
             }
         }
 
-        // GET: Ads/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Ads/Delete/5
+        [Route("~/ad/{AdName}/delete")]
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string adName)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var ad = this.service.GetAdByName(adName);
+            this.service.DeteleAd(ad);
+            return RedirectToAction("Index","Home");
         }
     }
 }

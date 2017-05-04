@@ -27,14 +27,31 @@ body {
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 500px;
 }
 .fleft {
     float: left
 }
-
+.div-or {
+    margin-bottom: 10px
+}
 .span-or {
-    margin-left: 25px;
+    margin-left: 35px;
+    color:#999
+}
+.forgot-password {
+    margin-left: 80px;    
+}
+.form-input {
+    width: 300px;
+}
+.form-textaria {
+    width: 300px;
+    height: 100px;
+    resize: none;
+}
+.form-btn {
+    width: 300px;
 }
 .login-btn:hover {
     text-decoration: none;
@@ -58,7 +75,7 @@ textarea {
     
     background: #3b5998;
     font-size: 13px;
-    width: 30%
+    width: 32%
 }
 
 .btn-facebook:before {
@@ -77,118 +94,324 @@ textarea {
     margin-top: -20px;
 }
 .search-btn {
-    margin-left: 295px;
-    width: 100px;
+    float: right;
+    width: 150px;
 }
 .search-input {
-    width: 300px;
+    width: 400px;
 }
-.menu-dropdown {
-    padding: 6px;
-    margin-right: -20px;
+.category-list {
+    margin-top: 15px;
 }
-.menu-button {
-    padding: 15px;
-    margin-right: 70px;
+.category-item {
+    vertical-align: middle;
+    width: 150px;
+    height: 48px;
 }
-
-.btn-file {
-    position: relative;
-    overflow: hidden;
+.category-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 11px;
+    display: inline-block;
+    margin-right: 10px;
 }
-
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
+.category-name {
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none !important;
 }
-.title-style {
+.category-name:hover {
+    color: white;
+    background-color: #158cba;
+}
+.col-category {
+    width: 30% !important;
+    margin-bottom: 15px;
+}
+.thumb {
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #e3e3e3;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    transition: border 0.2s ease-in-out;
+    width: 170px;
+    height: 173px;
+    text-align: center;
+}
+.thumb-inner {
+    margin-bottom: -5px;
+    margin-top: 5px;
+}
+.img-thumb {
+    height: 120px;
+    max-width: 167px;
+}
+.inner {
+    background-color: white;
+    text-align: initial;
+}
+.inner a {
+    text-decoration: none !important;
+}
+.inner a h4 {
+    color: #158cba;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
+}
+.inner a h4:hover {
+    background-color: #158cba;
+    color: white;
+}
+.home-ad-title {
+    margin-bottom: -10px
+}
+.home-price {
+    margin-top: -6px;
+}
+.col-ad {
+    width: 1% !important;
+    margin-right: 147px; 
+}
+.row-ad {
+    margin-left: 5px;
+}
+.newest-ad {
+    margin-left: 5px !important;
 }
 .offercontent {
-    width: 616px;
-    word-wrap: break-word;
+    width: 680px;
+    margin-left: 200px;
+    margin-top: 35px;
+    padding: 10px;
+    background-color: #c8c3c3;
+    color: white;
+    border-top: 4px solid #75caeb;
 }
 .offer-sidebar {
-    width: 252px;
     float: right;
-    position: relative;
-    z-index: 2;
+    margin-top: 35px;
 }
-.detailpage .offeractions {
-    width: 252px;
-}
-.offer-sidebar__inner {
-    width: 252px;
-}
-.offeractions {
-    top: 0;
-    width: 241px;
-}
-.offer-sidebar .price-label {
-    padding: 9px 5px;
-    margin: 0 0 10px -5px;
-    position: relative;
-    border: 1px solid #efefef;
-    border-left: none;
-    border-radius: 0 4px 4px 0;
-    background: #fff;
-    color: #414e41;
+.price-label {
+    background-color: #c8c3c3;
+    height: 55px;
+    border-radius: 3px;
     text-align: center;
-    line-height: 34px;
-    height: 49px;
-    z-index: 2;
+    padding: 9px;
+    font-size: 25px;
+    color: white;
+    line-height: 40px;
+    margin-bottom: 10px;
 }
-.offer-sidebar__buttons {
+
+.img-details-div {
+    text-align: center;
+}
+.img-details {
+    max-width: 650px;
+    height: 450px;
+}
+
+.btn-sendMsg {
+    width: 205px;
+}
+.textarea-report {
+    width: 550px;
+    height: 115px;
+    margin-top: 10px;
+    resize: none;
+}
+.data-details {
+    float: right;
+}
+.contact-phone {
+    font-size: 25px !important;
+    width: 205px;
+}
+.contact-phone:hover {
+    margin-top: 0px !important;
+    border-bottom-width: 4px !important;
+}
+.send-message {
+    margin-bottom: 10px;
+}
+.container-message {
+    width: 700px;
+    margin: 0 auto;
+}
+.message-ad-title {
+    display: inline-block;
+}
+.price-ad-message {
+    display: inline-block;
+    background-color: #c1c1c1;
+    width: 195px;
+    height: 55px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 51px;
+    margin-top: 10px;
+    font-size: 25px;
+    float: right;
+}
+.message-textarea {
+    width: 360px;
+    height: 150px !important;
+    resize: none;
+}
+
+.message-phone {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+.message-form {
+    border: 1px solid #e1dcdc;
+    padding: 10px;
+    border-radius: 2px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dash {
+    border: 0 none;
+    border-top: 1px dashed #322f32;
+    background: none;
+    height: 0;
+    width: 155px;
+    margin-left: 0;
+} 
+.category-img {
+    max-width: 160px;
+    height: 125px;
+}
+.panel-box {
+    border: 1px solid #c1c1c1;
+    border-radius: 2px;
+    height: 135px;
+    margin-bottom: 20px;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 65px;
+}
+.img-box {
+    float: left;
+    margin-right: 5px;
+    background-color: #c2c2c2;
+    width: 160px;
+    height: 125px;
+    text-align: center;
+}
+.category-ad-category {
+    margin-bottom: 65px;
+}
+.category-ad-price {
+    float: right;
+    margin-top: -130px;
+    font-size: 30px;
+}
+.input-search-box {
+    width: 300px;
+}
+.btn-search-box {
+    width: 150px;
+}
+
+.checkbox-margin {
+    margin: 10px 75px 10px 0px;
+}
+.btn-margin {
+    margin-left: 20px;
+}
+.input-ad-add {
+    width: 250px;
+}
+.textarea-ad-add {
+    width: 250px;
+    height: 115px !important;
+    resize: none;
+}
+.img-ad-edit {
+    height: 120px;
+}
+.img-ad-profile {
+    width: 80px;
+} 
+.profile-link {
+    font-size: 10px;
+    text-decoration: none !important;
+}
+.profile-link:hover {
+    color: white;
+    background-color: #158cba;
+}
+.link-color {
+    color: red;
+}
+.message-link {
+    text-decoration: none !important;
+}
+.message-link:hover {
+    color: white;
+    background-color: #158cba;
+}
+.tab-content {
+    border: 1px solid #ebebeb;
+    border-top: 0;
+    padding: 20px;
+}
+.data-message-detail {
+    float: right;
+}
+.textarea-message-details {
+    width: 440px;
+    height: 170px !important;
+    resize: none;
+}
+.panel-size-msg-deitals {
+    width: 500px;    
+}
+.setting-box {
+    border: 1px solid gainsboro;
     margin-bottom: 15px;
+    border-radius: 2px;
 }
-.offer-sidebar__buttons li {
-        margin-bottom: 8px;
+.setting-box-header {
+    background-color: gainsboro;
+    height: 34px;
+    line-height: 31px;
 }
+.setting-padding {
+    padding: 10px;
+}
+.link-margin {
+    margin-left: 5px;
+}
+.admin-btn-delete {
+    margin: 20px 0 -25px 200px !important;
+}
+.center {
+    text-align: center;
+}
+
 li {
     list-style: none;
 }
-.offer-sidebar__buttons .contact-button {
-    display: block;
-    padding: 12px 15px 12px 50px;
-    border: 1px solid #efefef;
-    font-weight: 700;
-    border-radius: 4px;
-    position: relative;
-    color: #fff;
-    font-size: 18px;
-    background: #0098d0;
-    word-wrap: break-word;
-    cursor: pointer;
-}
-.offer-sidebar__buttons .contact-button [data-icon=message] {
-    font-size: 20px;
-    top: 11px;
-    left: 17px;
-}
-.offer-sidebar__buttons .contact-button [data-icon] {
-    position: absolute;
-}
-table.breakword td, .brkword {
-    word-wrap: break-word;
-}
-.rel {
+
+.modal-backdrop {
     position: relative;
 }
-.xx-large {
-    font-size: 18px;
+.inline {
+    display: inline-block;
+}
+.footer-container {
+    background: url(http://blog.prodavalnik.com/wp-content/uploads/2011/10/prodavlanik_logo3.png)
+                bottom center no-repeat;
+    background-size: 100%; 
+    padding-bottom: 200px;
+    opacity: .5;
 }
 

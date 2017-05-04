@@ -1,0 +1,40 @@
+﻿@model Prodavalnik.Models.EntityModels.ApplicationUser
+@{
+    ViewBag.Title = "Add Admin";
+}
+
+<h2>Add Admin</h2>
+
+<div>
+    @using (@Html.BeginForm("AddAdmin","Admin", FormMethod.Get, new {@Class = "form-inline"}))
+    {
+        <div class="form-group">
+            @Html.TextBox("username", null, new {@Class = "form-control"})
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-info"/>
+        </div>
+    }
+</div>
+<div>
+    @if (Model == null)
+    {
+        <div>Not Found User!</div>
+    }
+    else
+    {
+        <div>
+            User: @Model.UserName
+            <span>
+                @using (@Html.BeginForm("AddAdmin", "Admin", FormMethod.Post))
+                {
+                    @Html.Hidden("userId", @Model.Id);
+                    <div class="form-group">
+                        <input type="submit" value="Set Admin" class="btn btn-success"/>
+                    </div>
+                }
+            </span>
+        </div>
+    }
+</div>
+

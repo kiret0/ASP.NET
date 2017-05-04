@@ -12,22 +12,22 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         <div class="col-md-offset-5 col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Имейл" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-input", placeholder = "Имейл" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-5 col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Парола" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control form-input", placeholder = "Парола" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-5 col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Потвърди парола" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control form-input", placeholder = "Потвърди парола" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-5 col-md-10">
-            <input type="submit" class="btn btn-info btn-block" value="Регистрация" />
+            <input type="submit" class="btn btn-primary form-btn" value="Регистрация" />
         </div>
     </div>
 }

@@ -1,44 +1,44 @@
 ﻿@using System.Globalization
 @model Prodavalnik.Models.ViewModels.Ads.AdMessageDetailsViewModel
 @{
-    ViewBag.Title = "SendMessage";
+    ViewBag.Title = "Изпрати съобщение";
 }
 
-<h2>SendMessage</h2>
-
-<div class="container">
-    <div class="title-style ">
-        @Model.Title
+<div class="container-message">
+    <div class="message-ad-title">
+        <h2>@Model.Title</h2>
     </div>
-    <div class="visible-lg-inline">
-        <div>@Model.Price</div>
+    <div class="price-ad-message">
+        <div>@Model.Price лв.</div>
     </div>
     <hr />
     <div>
         <div>
-            <span>Номер на обявата: @Model.Id</span> |
-            <span>Добавена в @Model.PublishOn.ToString("HH:mm"), @Model.PublishOn.ToString("dd MMMM yyyy", new CultureInfo("bg-BG"))</span> |
-            <span>@Model.State</span>
+            <span>Номер на обявата: @Model.Id</span>
+            <span class="data-details">Добавена в @Model.PublishOn.ToString("HH:mm"), @Model.PublishOn.ToString("dd MMMM yyyy", new CultureInfo("bg-BG"))</span>
         </div>
-
-        <div>@Model.Description</div>
     </div>
-    <hr />
-    <h2>Твоето съобщение</h2>
-    <hr />
-    <div>@Model.Author.PhoneNumber</div>
+    <div class="message-form">
+        <h4>Твоето съобщение</h4>
+        <hr class="dash" />
+        <div class="message-phone"><span class="glyphicon glyphicon-phone"></span>@Model.Author.PhoneNumber</div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.TextArea("messageContent")
-        @Html.Hidden("AdName",new {adName = Model.Title})
+            <div class="form-group">
+                @Html.TextArea("messageContent", new { @class = "form-control message-textarea" })
+            </div>
+            @Html.Hidden("AdName", new { adName = Model.Title })
 
-        <input class="btn btn-info" type="submit" value="Изпрати"/> 
-    }
+            <div class="form-group">
+                <input class="btn btn-info btn-message" type="submit" value="Изпрати" />
+            </div>
+        }
+    </div>
 </div>
 
 

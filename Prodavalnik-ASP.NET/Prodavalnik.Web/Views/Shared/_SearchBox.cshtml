@@ -6,51 +6,36 @@
     {
         <div class="row">
             <div class="form-group">
-                <div class="col-md-12">
-                    @Html.TextBox("Search", null, new { @class = "form-control col-md-10", @placeholder = "Търсене..." })
-                </div>
+                    @Html.TextBox("Search", null, new { @class = "form-control input-search-box", @placeholder = "Търсене..." })
             </div>
 
-            <div class="form-group cat">
-
-                <div class="col-md-10">
-                    @Html.DropDownList("Category", new SelectList(Model, "Value", "Text", Model.FirstOrDefault(x => x.Selected)?.Value), htmlAttributes: new { @class = "form-control fields-select" })
-
-                </div>
+            <div class="form-group">
+                    @Html.DropDownList("Category", 
+                   new SelectList(Model, "Value", "Text", Model.FirstOrDefault(x => x.Selected)?.Value), htmlAttributes: new { @class = "form-control fields-select input-search-box" })
             </div>
         </div>
 
         <div class="row">
-            <div class="form-group ch">
-                <div class="col-md-12">
-                    @Html.CheckBox("FWDescription", true, new {@class = "checkbox-success"})
+            <div class="form-group checkbox-margin">
+                    @Html.CheckBox("FWDescription", true, new {@class = ""})
                     @Html.Label("Търси и в описанието на обявите")
-                </div>
             </div>
-            <div class="form-group ch">
-                <div class="col-md-12">
-                    @Html.CheckBox("FWPicture", false, new { @class = "checkbox-success" })
+            <div class="form-group checkbox-margin">
+                    @Html.CheckBox("FWPicture", false, new { @class = "" })
                     @Html.Label("Само със снимка")
-                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="form-group">
-                <div class="col-md-12">
-                    @Html.TextBox("PriceFrom", null, new { @class = "form-control", @placeholder = "Цена от" })
-                </div>
+                    @Html.TextBox("PriceFrom", null, new { @class = "form-control input-search-box", @placeholder = "Цена от" })
             </div>
             <div class="form-group">
-                <div class="col-md-12">
-                    @Html.TextBox("PriceTo", null, new { @class = "form-control", @placeholder = "Цена до" })
-                </div>
+                    @Html.TextBox("PriceTo", null, new { @class = "form-control input-search-box", @placeholder = "Цена до" })
             </div>
             
-            <div class="form-group">
-                <div class="col-md-12">
-                   <input type="submit" class="btn btn-default" id="search" value="Търси"/>
-                </div>
+            <div class="form-group btn-margin">
+                   <input type="submit" class="btn btn-default btn-search-box" id="search" value="Търси"/>
             </div>
         </div>
     }

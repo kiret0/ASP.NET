@@ -15,7 +15,10 @@
 
         IDbSet<Message> Messages { get; }
 
+        IDbSet<Report> Reports { get; }
+
         int SaveChanges();
+
         IDbSet<T> Set<T>()
            where T : class;
     }

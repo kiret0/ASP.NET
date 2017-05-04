@@ -42,8 +42,8 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -80,15 +80,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindingModels\AddCategoryBindingModel.cs" />
+    <Compile Include="BindingModels\Admin\AddCategoryBindingModel.cs" />
+    <Compile Include="BindingModels\Admin\AddAdminBindingModel.cs" />
+    <Compile Include="BindingModels\Admin\ReportBindingModel.cs" />
     <Compile Include="BindingModels\Ads\AddAdsBindingModel.cs" />
+    <Compile Include="BindingModels\Ads\EditAdBindingModel.cs" />
+    <Compile Include="BindingModels\Ads\ReportAdBindingModel.cs" />
     <Compile Include="BindingModels\SendMessageBindingModel.cs" />
+    <Compile Include="BindingModels\Users\ChangeEmailBindingModel.cs" />
+    <Compile Include="BindingModels\Users\DeleteMyAdBindingModel.cs" />
+    <Compile Include="BindingModels\Users\EditProfileBindingModel.cs" />
     <Compile Include="EntityModels\Ad.cs" />
     <Compile Include="EntityModels\ApplicationUser.cs" />
     <Compile Include="EntityModels\Category.cs" />
     <Compile Include="EntityModels\Enums\State.cs" />
     <Compile Include="EntityModels\Image.cs" />
     <Compile Include="EntityModels\Message.cs" />
+    <Compile Include="EntityModels\Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
@@ -99,11 +107,14 @@
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\Admin\AdminPanelViewModel.cs" />
+    <Compile Include="ViewModels\Admin\ReportViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdCategoryViewModel.cs" />
     <Compile Include="ViewModels\Ads\AddAdViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdMessageDetailsViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdsViewModel.cs" />
     <Compile Include="ViewModels\Ads\AdViewModel.cs" />
+    <Compile Include="ViewModels\Ads\EditAdViewModel.cs" />
     <Compile Include="ViewModels\Ads\PreviewAdViewModel.cs" />
     <Compile Include="ViewModels\Categories\AddCategoryViewModel.cs" />
     <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
@@ -121,6 +132,7 @@
     <Compile Include="ViewModels\User\MessageDetailsViewModel.cs" />
     <Compile Include="ViewModels\User\MessageViewModel.cs" />
     <Compile Include="ViewModels\User\MyAdViewModel.cs" />
+    <Compile Include="ViewModels\User\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

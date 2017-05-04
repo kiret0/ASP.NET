@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Prodavalnik.Models.ViewModels.Admin.ReportViewModel>
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h2>Reports</h2>
+<ul class="nav nav-pills">
+    <li ><a href="/admin/reports">Unread</a></li>
+    <li class="active"><a href="/admin/reports/read">Read</a></li>
+</ul>
+<div>
+    @foreach (var report in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="inline"><strong>Reason: </strong>@report.Reason</div>
+                <div class="inline"><strong>Ad Title: </strong>@report.ReportedAd.Title <a href="/ad/@report.ReportedAd.Title">View</a></div>
+            </div>
+            @if (!string.IsNullOrEmpty(report.ReportInfo))
+            {
+                <div class="panel-footer">
+                    <div class="inline"><strong>Report info: </strong>@report.ReportInfo</div>
+                </div>
+            }
+        </div>
+    }
+</div>

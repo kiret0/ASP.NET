@@ -7,6 +7,7 @@
     using Microsoft.Owin.Security.Cookies;
     using Owin;
     using Data;
+    using Microsoft.Owin.Security.Facebook;
     using Models.EntityModels;
 
     public partial class Startup
@@ -53,10 +54,12 @@
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            
 
+            
             app.UseFacebookAuthentication(
-               appId: "195810287591490",
-               appSecret: "94fc0c86f778b0546e5003f905839396");
+                appId: "195810287591490",
+                appSecret: "94fc0c86f778b0546e5003f905839396");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

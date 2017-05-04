@@ -10,18 +10,18 @@
     <ul class="nav nav-tabs">
         <li><a href="/profile">Обяви</a></li>
         <li class="active"><a href="/profile/messages">Съобщения</a></li>
-        <li><a data-toggle="tab" href="/profile/settings">Настройки</a></li>
+        <li><a href="/profile/settings">Настройки</a></li>
     </ul>
 
     <div class="tab-content">
         <ul class="nav nav-pills">
-            <li class="active"><a href="/profile/messages">Получени</a></li>
+            <li class="disabled"><a href="/profile/messages">Получени</a></li>
             <li><a href="/profile/messages/send">Изпратени</a></li>
         </ul>
         <div class="tab-pane fade in active">
             <h3>Входящи</h3>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <tr>
                         <th>Подател</th>
                         <th>Обява</th>
@@ -31,11 +31,11 @@
                     {
                         <tr>
                                 <td>@message.Sender.Email.Substring(0, @message.Sender.Email.IndexOf("@"))</td>
-                                <td><a href="/profile/message/@message.Id">@message.Ad.Title <br /> @message.Content</a></td>
+                                <td><a href="/profile/message/@message.Id" class="message-link">@message.Ad.Title <br /> @message.Content</a></td>
                                 <td>
                                     @if (@message.DateOfSent.Date == DateTime.Today)
                                     {
-                                        <span>днес, @message.DateOfSent.Hour</span>
+                                        <span>днес, @message.DateOfSent.ToString("HH:mm")</span>
                                     }
                                     else
                                     {

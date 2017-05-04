@@ -7,6 +7,7 @@
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Models.BindingModels.Users;
     using Models.EntityModels;
 
     public class UsersService : Service
@@ -67,6 +68,66 @@
             };
             this.data.Messages.InsertOrUpdate(message);
             this.data.SaveChanges();
+        }
+
+        public void EditProfile(ApplicationUser currentUser, EditProfileBindingModel bind)
+        {
+            currentUser.Name = bind.Name;
+            currentUser.PhoneNumber = bind.PhoneNumber;
+            this.data.SaveChanges();
+        }
+
+        public void DeleteProfile(ApplicationUser user)
+        {
+            this.data.Users.Delete(user);
+            this.data.SaveChanges();
+        }
+
+        public void RemoveAds(ApplicationUser user)
+        {
+            var ads = this.data.Ads.Find(ad => ad.Author.Id == user.Id);
+            
+            user.Ads.Clear();
+            foreach (var ad in ads)
+            {
+                var images = new List<Image>();
+                images.AddRange(ad.Images);
+                foreach (var image in images)
+                {
+                    this.data.Images.Delete(image);
+                }
+                this.data.Ads.Delete(ad);
+            }
+            this.data.SaveChanges();
+        }
+
+        public void RemoveMessages(ApplicationUser user)
+        {
+            var messages = this.data.Messages.Find(m => m.Recipient.Id == user.Id || m.Sender.Id == user.Id);
+            foreach (var message in messages)
+            {
+                this.data.Messages.Delete(message);
+            }
+            this.data.SaveChanges();
+        }
+
+        public void DeleteAd(Ad ad)
+        {
+            var images = new List<Image>();
+            images.AddRange(ad.Images);
+            foreach (var image in images)
+            {
+                this.data.Images.Delete(image);
+            }
+
+            this.data.Ads.Delete(ad);
+            this.data.SaveChanges();
+        }
+
+        public Ad GetAdById(int adId)
+        {
+            var ad = this.data.Ads.GetById(adId);
+            return ad;
         }
     }
 }

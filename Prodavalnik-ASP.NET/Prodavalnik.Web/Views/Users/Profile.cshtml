@@ -7,19 +7,18 @@
 <h2>Мойте обяви</h2>
 <div class="container">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="profile">Обяви</a></li>
-        <li><a  href="profile/messages">Съобщения</a></li>
-        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+        <li class="active"><a href="/profile">Обяви</a></li>
+        <li><a href="/profile/messages">Съобщения</a></li>
+        <li><a href="/profile/settings">Настройки</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <h3>Активни обяви</h3>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <tr>
-                        <th width="65">Дата</th>
+                        <th width="75">Дата</th>
                         <th width="42"></th>
                         <th>Заглавие</th>
                         <th width="95">Цена</th>
@@ -38,19 +37,25 @@
                             <td>
                                 @if (myAd.Images.Count() == 0)
                                 {
-                                    <img src="" alt="" width="30px" />
+                                    <img src="" alt="" class="img-ad-profile" />
                                 }
                                 else
                                 {
-                                    <img src="../../UploadsImages/@myAd.Images.First().ImageName" alt="@myAd.Images.First().ImageName" width="35px" />
+                                    <img src="../../UploadsImages/@myAd.Images.First().ImageName" alt="@myAd.Images.First().ImageName" class="img-ad-profile" />
                                 }
                             </td>
                             <td>
-                                @myAd.Title
-                                <br />
-                                <a href="ad/@myAd.Title">Преглед</a>
-                                <a href="ad/edit/@myAd.Title/">Редактирай</a>
-                                <a href="ad/delete/@myAd.Title">Изтрии</a>
+                                <p>@myAd.Title</p>
+                                <div class="inline"><a href="ad/@myAd.Title" class="profile-link">Преглед</a></div>
+                                <div class="inline"><a href="ad/@myAd.Title/edit" class="profile-link">Редактирай</a></div>
+                                <div class="inline">
+                                    @using (Html.BeginForm("DeleteAd", "Users", FormMethod.Post, new { id = "deleteAd" }))
+                                    {
+                                        @Html.Hidden("AdId", myAd.Id)
+                                        <a href="javascript:document.getElementById('deleteAd').submit()" class="profile-link link-color">Изтрии</a>
+                                    }
+                                </div>
+                                
                             </td>
                             <td>@myAd.Price лв.</td>
                         </tr>

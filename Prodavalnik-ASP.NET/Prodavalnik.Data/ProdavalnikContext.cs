@@ -27,6 +27,8 @@ namespace Prodavalnik.Data
 
         public IDbSet<Message> Messages { get; set; }
 
+        public IDbSet<Report> Reports { get; set; }
+
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

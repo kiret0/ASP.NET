@@ -1,0 +1,132 @@
+﻿@model Prodavalnik.Models.ViewModels.User.SettingsViewModel
+@{
+    ViewBag.Title = "Settings";
+}
+
+<div class="container">
+    <br/>
+    <ul class="nav nav-tabs">
+        <li><a href="/profile">Обяви</a></li>
+        <li><a href="/profile/messages">Съобщения</a></li>
+        <li class="active"><a href="/profile/settings">Настройки</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active">
+            @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    @ViewBag.StatusMessage
+                </div>
+            }
+            <div class="setting-box">
+                <div class="setting-box-header">
+                    <a href="#" data-toggle="collapse" data-target="#changeProfile" class="link-margin">
+                        <span>Редакция на профил</span>
+                    </a>
+                </div>
+                <div id="changeProfile" class="collapse setting-padding">
+                    @using (@Html.BeginForm("EditProfile", "Users", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            @Html.Label("Твоето име")
+                            @Html.EditorFor(m => m.CurrentUser.Name, null, new {HtmlAttributes = new {@class = "form-control", @Name = "Name"}})
+                            @Html.ValidationMessageFor(m => m.CurrentUser.Name, "", new {@class = "text-danger"})
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Телефонен номер")
+                            @Html.EditorFor(m => m.CurrentUser.PhoneNumber, null, new {HtmlAttributes = new {@class = "form-control", @Name = "PhoneNumber"}})
+                            @Html.ValidationMessageFor(m => m.CurrentUser.PhoneNumber, "", new {@class = "text-danger"})
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Промени" class="btn btn-info"/>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (Model.CurrentUser.PasswordHash != null)
+            {
+                <div class="setting-box">
+                    <div class="setting-box-header">
+                        <a href="#" data-toggle="collapse" data-target="#changePassword" class="link-margin">
+                            <span>Промяна на парола</span>
+                        </a>
+                    </div>
+                    <div id="changePassword" class="collapse setting-padding">
+                        @using (@Html.BeginForm("ChangePassword", "Manage", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                            <div class="form-group">
+                                @Html.Label("Стара парола")
+                                @Html.PasswordFor(m => m.ChangePasswordViewModel.OldPassword, new {@class = "form-control", @Name = "OldPassword"})
+                                @Html.ValidationMessageFor(m => m.ChangePasswordViewModel.OldPassword, "", new {@class = "text-danger"})
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Нова парола")
+                                @Html.PasswordFor(m => m.ChangePasswordViewModel.NewPassword, new {@class = "form-control", @Name = "NewPassword"})
+                                @Html.ValidationMessageFor(m => m.ChangePasswordViewModel.NewPassword, "", new {@class = "text-danger"})
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Повтори новата парола")
+                                @Html.PasswordFor(m => m.ChangePasswordViewModel.ConfirmPassword, new {@class = "form-control", @Name = "ConfirmPassword"})
+                                @Html.ValidationMessageFor(m => m.ChangePasswordViewModel.ConfirmPassword, "", new {@class = "text-danger"})
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Промяна на паролата" class="btn btn-info"/>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="setting-box">
+                    <div class="setting-box-header">
+                        <a href="#" data-toggle="collapse" data-target="#changeEmail" class="link-margin">
+                            <span>Промяна на имейл</span>
+                        </a>
+                    </div>
+                    <div class="collapse setting-padding" id="changeEmail">
+                        @using (@Html.BeginForm("ChangeEmail", "Manage", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                            <div class="form-group">
+                                @Html.Label("Текуща парола")
+                                @Html.TextBox("CurrentPassword", null, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Нов имейл")
+                                @Html.TextBox("Email", null, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Промени на имейл" class="btn btn-info"/>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="setting-box">
+                <div class="setting-box-header">
+                    <a href="#" data-toggle="collapse" data-target="#deleteProfile" class="link-margin">
+                        <span>Изтриване на профила</span>
+                    </a>
+                </div>
+                <div >
+                    @using (@Html.BeginForm("DeleteProfile", "Users", FormMethod.Post, new {@class = "collapse setting-padding", id = "deleteProfile"}))
+                    {
+                        <div class="form-group col-md-5">
+                            <input type="submit" value="Изтриване на профила" class="btn btn-danger btn-block"/>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

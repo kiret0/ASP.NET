@@ -1,4 +1,5 @@
-﻿@model Prodavalnik.Models.ViewModels.Ads.AdsViewModel
+﻿@using System.Globalization
+@model Prodavalnik.Models.ViewModels.Ads.AdsViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -13,30 +14,37 @@
     {
         <h3>Намерени @Model.previewAdViewModels.Count() обяви</h3>
     }
-
+    <hr/>
     @foreach (var ad in Model.previewAdViewModels)
     {
         <div class="row">
-            <div class="col-md-10">
-                <div class="title-style"><a href="/ad/@ad.Title">@ad.Title</a></div>
-                @if (ad.Images.Count() != 0)
-                {
-                    <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title"/>
-                }
-                else
-                {
-                    <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title"/>
-                }
-                <div class="list-inline">
-                    <div><a href="category/@ad.CategoryName">@ad.CategoryName</a>
+            <div class="col-md-11">
+                <div class="panel-box">
+                    <div class="img-box">
+                        @if (ad.Images.Count() != 0)
+                        {
+                            <img src="../../UploadsImages/@ad.Images.First().ImageName" alt="@ad.Title" class="category-img" />
+                        }
+                        else
+                        {
+                            <img src="http://www.trueviewaz.com/wp-content/uploads/2016/12/no-image.jpg" alt="@ad.Title" class="category-img"/>
+                        }
                     </div>
-                </div>
-                <div class="list-inline">
-                    <div>@ad.PublishOn.ToShortDateString()</div>
+                    <div class="category-ad-info">
+                        <div class="category-ad-title"><a href="/ad/@ad.Title">@ad.Title</a></div>
+                        <div class="category-ad-category">
+                            @ad.CategoryName
+                        </div>
+                        <div class="category-ad-data">
+                            @ad.PublishOn.ToString("dd MMMM yyyy", new CultureInfo("bg-BG"))
+                        </div>
+                    </div>
+                    <div class="category-ad-price">
+                        @ad.Price лв.
+                    </div>
                 </div>
             </div>
         </div>
-        <hr/>
     }
 </div>
 
