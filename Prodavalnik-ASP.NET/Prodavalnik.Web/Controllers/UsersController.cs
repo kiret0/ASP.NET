@@ -16,12 +16,13 @@ namespace Prodavalnik.Web.Controllers
     using Models.EntityModels;
     using Models.ViewModels.User;
     using Services;
+    using Services.Contracts;
 
     [Authorize]
     [RoutePrefix("profile")]
     public class UsersController : BaseController
     {
-        private UsersService service;
+        private IUsersService service;
         // GET: Users
         public UsersController(IProdavalnikData data) : base(data)
         {

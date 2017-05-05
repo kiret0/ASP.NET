@@ -11,6 +11,8 @@ namespace Prodavalnik.Web.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Services;
+    using Services.Contracts;
 
     public static class NinjectWebCommon 
     {
@@ -64,6 +66,11 @@ namespace Prodavalnik.Web.App_Start
         {
             kernel.Bind<IProdavalnikData>().To<ProdavalnikData>();
             kernel.Bind<IProdavalnikContext>().To<ProdavalnikContext>();
+            kernel.Bind<IAdminService>().To<AdminService>();
+            kernel.Bind<IAdsService>().To<AdsService>();
+            kernel.Bind<ICategoriesService>().To<CategoriesService>();
+            kernel.Bind<IHomeService>().To<HomeService>();
+            kernel.Bind<IUsersService>().To<UsersService>();
         }        
     }
 }

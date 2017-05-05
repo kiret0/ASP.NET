@@ -7,6 +7,7 @@
     using System.Net;
     using System.Web;
     using System.Web.ModelBinding;
+    using Contracts;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -14,7 +15,7 @@
     using Models.EntityModels;
     using Models.EntityModels.Enums;
 
-    public class AdsService : Service
+    public class AdsService : Service, IAdsService
     {
         public AdsService(IProdavalnikData data) : base(data)
         {

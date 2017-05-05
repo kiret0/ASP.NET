@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using Contracts;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models.BindingModels.Users;
     using Models.EntityModels;
 
-    public class UsersService : Service
+    public class UsersService : Service, IUsersService
     {
         public UsersService(IProdavalnikData data) : base(data)
         {

@@ -13,12 +13,13 @@
     using Models.ViewModels.Categories;
     using Models.ViewModels.Home;
     using Services;
+    using Services.Contracts;
 
     [RoutePrefix("home")]
     [Route("action=Index")]
     public class HomeController : BaseController
     {
-        private HomeService service;
+        private IHomeService service;
         public HomeController(IProdavalnikData data) : base(data)
         {
             this.service = new HomeService(data);

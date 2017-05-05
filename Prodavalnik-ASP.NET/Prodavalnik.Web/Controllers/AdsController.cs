@@ -18,11 +18,13 @@ namespace Prodavalnik.Web.Controllers
     using Models.ViewModels.Ads;
     using Ninject.Infrastructure.Language;
     using Services;
+    using Services.Contracts;
+
     [RoutePrefix("ads")]
     [Authorize]
     public class AdsController : BaseController
     {
-        private AdsService service;
+        private IAdsService service;
 
         public AdsController(IProdavalnikData data) : base(data)
         {

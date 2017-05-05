@@ -13,12 +13,14 @@ namespace Prodavalnik.Web.Areas.Admin.Controllers
     using Models.BindingModels.Admin;
     using Models.EntityModels;
     using Services;
+    using Services.Contracts;
+
     [RouteArea("Admin")]
     [RoutePrefix("Category")]
     [CustomAuthorize(Roles = "Admin")]
     public class CategoriesController : BaseController
     {
-        private CategoriesService service;
+        private ICategoriesService service;
         public CategoriesController(IProdavalnikData data) : base(data)
         {
             this.service = new CategoriesService(data);

@@ -2,12 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Contracts;
     using Data.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models.EntityModels;
 
-    public class AdminService : Service
+    public class AdminService : Service, IAdminService
     {
         public AdminService(IProdavalnikData data) : base(data)
         {

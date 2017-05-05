@@ -1,9 +1,10 @@
 ﻿namespace Prodavalnik.Services
 {
+    using Contracts;
     using Data.Contracts;
     using Models.EntityModels;
 
-    public class CategoriesService :Service
+    public class CategoriesService :Service, ICategoriesService
     {
         public CategoriesService(IProdavalnikData data) : base(data)
         {

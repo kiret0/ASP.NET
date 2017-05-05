@@ -13,13 +13,14 @@ namespace Prodavalnik.Web.Areas.Admin.Controllers
     using Models.EntityModels;
     using Models.ViewModels.Admin;
     using Services;
+    using Services.Contracts;
     using Web.Controllers.Base;
 
     [RouteArea("Admin")]
     [CustomAuthorize(Roles = "Admin")]
     public class AdminController : BaseController
     {
-        private AdminService service;
+        private IAdminService service;
 
 
         public AdminController(IProdavalnikData data) : base(data)

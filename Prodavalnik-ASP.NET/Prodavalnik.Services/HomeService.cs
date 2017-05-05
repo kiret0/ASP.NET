@@ -2,10 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Contracts;
     using Data.Contracts;
     using Models.EntityModels;
 
-    public class HomeService :Service
+    public class HomeService :Service, IHomeService
     {
         public HomeService(IProdavalnikData data) : base(data)
         {
